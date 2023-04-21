@@ -3,25 +3,31 @@
 
 import java.util.Scanner;
 
-public class Lab1_4 {
+public class Main {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter text: ");
-        String text = input.nextLine();
+        Scanner scanner = new Scanner(System.in);
 
-        // розбиваємо текст на масив слів  
-        String[] words = text.split("[\\s,.!?;:-]+");
+        System.out.print("Enter a text: ");
+        String text = scanner.nextLine();
 
-        // перетворюємо кожне слово
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            char firstLetter = word.charAt(0);
-            // замінюємо всі наступні входження першої літери на порожній рядок
-            words[i] = word.replace(String.valueOf(firstLetter), "").replace(" ", "");
+        String[] words = text.split("\\s+"); // розділяємо текст на масив слів
+        StringBuilder result = new StringBuilder(); // створюємо StringBuilder для збереження результату
+
+        for (String word : words) {
+            char firstLetter = word.charAt(0); // отримуємо першу літеру слова
+            result.append(firstLetter); // додаємо першу літеру до результату
+
+            // видаляємо всі наступні входження першої літери
+            for (int i = 1; i < word.length(); i++) {
+                char letter = word.charAt(i);
+                if (letter != firstLetter) {
+                    result.append(letter);
+                }
+            }
+
+            result.append(" "); // додаємо пробіл після слова
         }
 
-        // формуємо рядок зі словами масиву
-        String result = String.join(" ", words);
-        System.out.println("Result: " + result);
+        System.out.println("Result: " + result.toString().trim()); // виводимо результат
     }
 }
